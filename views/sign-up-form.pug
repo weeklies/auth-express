@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    h2 Sign up
+    p Signing up makes you a user. 
+    p Becoming a member requires entering a secret code. (Don't worry, it's easy to find.)
+    form(action="/sign-up" method="POST")
+        .mb-3
+            label(for="username") Username
+            input.form-control(required name="username" type="text" )
+        .mb-3
+            label(for="password") Password (min. 8 characters)
+            input.form-control(required name="password" minlength="8" type="password")
+        .mb-3
+            label(for="password-confirm") Confirm Password
+            input.form-control(required name="password-confirm" minlength="8" type="password")
+        .mb-3.form-check
+            input#disclaimer.form-check-input(type="checkbox" name="disclaimer" required value="false") 
+            label.form-check-label(for="disclaimer") I have checked, and confirm that #[strong I have not entered identifiable information or personal passwords in this form.]
+        button.btn.btn-primary Sign up

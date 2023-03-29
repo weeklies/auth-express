@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= Membership
+
+    p Enter a secret code to become a member. Members can post messages, isn't that neat?
+    p (The secret code is 
+        code  potatosalad
+        | . You're welcome)
+    form(action="/membership" method="POST")
+        input.form-control(type="text" required name="secret-code" placeholder="Secret code")
+        button.btn.btn-primary(type="submit") Submit
+
