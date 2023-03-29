@@ -8,26 +8,21 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+var User = require("./models/user");
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
 
 const mongoDb = process.env.MONGO_URI;
 mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
-const User = mongoose.model(
-  "User",
-  new Schema({
-    username: { type: String, required: true },
-    password: { type: String, required: true }
-  })
-);
-
 const app = express();
 app.set("views", path.join(__dirname, 'views'));
-app.set("view engine", "ejs");
+app.set("view engine", "pug");
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -74,37 +69,8 @@ app.use(function (req, res, next) {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => res.render("index", { title: "Title", user: req.user },));
-
-app.post(
-  "/log-in",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/"
-  })
-);
-
-app.get("/log-out", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) return next(err);
-    res.redirect("/");
-  });
-});
-
-app.get("/sign-up", (req, res) => res.render("sign-up-form"));
-app.post("/sign-up", async (req, res, next) => {
-  bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-    if (err) return next(err);
-    const user = new User({
-      username: req.body.username,
-      password: hashedPassword,
-    });
-    await user.save();
-    res.redirect("/");
-  }
-  );
-});
-
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

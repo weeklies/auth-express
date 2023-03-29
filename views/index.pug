@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+
+  if currentUser
+    h5 Welcome, #[strong= currentUser.username].
+  else
+    h5 Please log in.
+    form.d-flex.flex-column(action="/log-in" method="POST")
+      label(for="username") Username
+      input(name="username" placeholder="username" type="text" )
+      label(for="password") Password
+      input(name="password" type="password")
+      button Log In
