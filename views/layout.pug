@@ -31,5 +31,18 @@ html(lang='en')
             a.nav-link(href='/log-in') Log in
           li.nav-item
             a.nav-link(href='/sign-up') Sign up
-    .container-md.my-md-4
+    .container-sm.my-4
+      if errors
+        .alert.alert-info
+          p 
+            strong There was an error fulfilling your request:
+          p 
+            ul 
+              for error in errors
+                li=  error.msg
+      else if success
+        .alert.alert-success
+          p 
+            strong Success
+          p= success.msg
       block content

@@ -20,11 +20,29 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
 const app = express();
-app.set("views", path.join(__dirname, 'views'));
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
-app.use(helmet());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        scriptSrc: [
+          "'self'",
+          "https://code.jquery.com",
+          "https://stackpath.bootstrapcdn.com",
+        ],
+      },
+    },
+  })
+);
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -36,13 +54,12 @@ passport.use(
 
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
-          return done(null, user)
+          return done(null, user);
         } else {
-          return done(null, false, { message: "Incorrect password" })
+          return done(null, false, { message: "Incorrect password" });
         }
-      })
-    }
-    catch (err) {
+      });
+    } catch (err) {
       return done(err);
     }
   })
@@ -83,11 +100,11 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;

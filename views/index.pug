@@ -1,10 +1,10 @@
 extends layout
 
 block content
-    h1= title
+    h2= title
 
     if currentUser
-        h5 Welcome, #[strong= currentUser.username].
+        h5 Welcome, #[strong= currentUser.username] (#{currentUser.member ? "Member" : "User" }).
     else
         h5 Please log in.
         form(action="/log-in" method="POST")
