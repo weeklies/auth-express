@@ -14,8 +14,14 @@ const Message = require("../models/message");
 
 /* GET home page. */
 router.get(["/", "/log-in"], function (req, res, next) {
+  const flash = req.flash();
+  if (flash.error) {
+    const err = new Error(flash.error[0]);
+    err.status = 401;
+    return next(err);
+  }
+
   res.render("index", {
-    title: "Members Only",
     user: req.user,
     success: req.session.success,
   });
@@ -33,6 +39,7 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/",
+    failureFlash: true,
   })
 );
 
@@ -56,7 +63,7 @@ router.post(
     .withMessage("Password has to be at least 8 characters long.")
     .custom((value, { req }) => !value.includes(" "))
     .withMessage("Password must not contain spaces."),
-  body("password-confirm")
+  body("confirmPassword")
     .custom((value, { req }) => value === req.body.password)
     .withMessage("Password confirmation must match provided password."),
   body("disclaimer", "You must agree to the privacy disclaimer.").equals("on"),

@@ -3,6 +3,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 var createError = require("http-errors");
 const express = require("express");
+const flash = require("connect-flash");
 const helmet = require("helmet");
 const path = require("path");
 const session = require("express-session");
@@ -44,12 +45,13 @@ app.use(
   })
 );
 
+app.use(flash());
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
       const user = await User.findOne({ username: username });
       if (!user) {
-        return done(null, false, message, { message: "Incorrect username" });
+        return done(null, false, { message: "Incorrect username" });
       }
 
       bcrypt.compare(password, user.password, (err, res) => {
@@ -60,7 +62,7 @@ passport.use(
         }
       });
     } catch (err) {
-      return done(err);
+      return done(err, false, { message: "There was an unexpected error." });
     }
   })
 );
