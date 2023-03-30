@@ -2,13 +2,27 @@ extends layout
 
 block content 
     h2 Messages
+    if !currentUser.member
+        p Usernames and message dates are hidden to non-members. 
+            a(href="/member")  Apply to be a member today.
+    if currentUser.admin
+        p As an admin, you can delete messages.
+        p There is no confirmation dialog, so please
+            strong  be careful when pressing the red button.
     .msg-grid
         for message in messages
             .card
                 .card-body
-                    .card-title
-                        strong @#{message.creator.username}
+                    if currentUser.member
+                        .card-title
+                            strong @#{message.creator.username}
                     .card-title
                         h6= message.title
                     p.card-text= message.text
-                    small.text-muted Posted on #{message.timestamp_formatted}
+                    if currentUser.member
+                        small.text-muted Posted on #{message.timestamp_formatted}
+
+                    if currentUser.admin
+                        .d-flex.justify-content-end.mt-3
+                        form(action=`/messages/${message._id}/delete`, method="post")  
+                            button.btn.btn-danger.btn-sm Delete

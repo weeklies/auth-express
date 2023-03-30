@@ -12,5 +12,10 @@ block content
             input.form-control(required name="title" type="text" value=(undefined===title ? '' : title) )
         .mb-3
             label(for="text") Body text
-            textarea.form-control(required name="text")= text
-        button.btn.btn-primary(type="submit") Post!
+            textarea.form-control(required name="text" maxlength="2000")= text
+        if currentUser.admin
+            p 
+                strong You cannot post using your admin account.
+            button.btn.btn-primary(type="submit" disabled) Post!
+        else
+            button.btn.btn-primary(type="submit") Post!
