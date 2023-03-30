@@ -2,3 +2,11 @@ extends layout
 
 block content 
     h2 TODO
+    for message in messages
+        .d-grid
+            .card
+                .card-body
+                    h5.card-title= message.title
+                    h6.card-subtitle= message.creator.username
+                    h6.card-subtitle.mb-2= message.timestamp
+                    p.card-text= message.text

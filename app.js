@@ -91,7 +91,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/messages', messagesRouter);
+
+app.use('/messages', [
+  function (req, res, next) {
+    if (!req.user) return res.redirect('/login');
+    next();
+  },
+  messagesRouter,
+]);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

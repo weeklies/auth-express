@@ -28,14 +28,6 @@ router.get('/login', function (req, res, next) {
   });
 });
 
-router.get('/status', (req, res, next) => {
-  if (req.user) {
-    return res.render('status');
-  } else {
-    res.redirect('/login');
-  }
-});
-
 router.post(
   '/login',
   passport.authenticate('local', {
@@ -61,6 +53,14 @@ router.post(
   ...userController.validateSignUp,
   userController.postSignUp
 );
+
+router.get('/status', (req, res, next) => {
+  if (req.user) {
+    return res.render('status');
+  } else {
+    res.redirect('/login');
+  }
+});
 
 router.get('/member', (req, res) => {
   if (!req.user) return res.redirect('/login');

@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h2 Post a message
+    form(action="/messages/new" method="POST") 
+        .mb-3
+            label(for="title") Title
+            input.form-control(required name="title" type="text" )
+        .mb-3
+            label(for="text") Text
+            textarea.form-control(required name="text")
+        button.btn.btn-primary(type="submit") Post!
