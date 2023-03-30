@@ -1,5 +1,13 @@
 extends layout
 
 block content
-    h5 Welcome, #[strong= currentUser.username] (#{currentUser.member ? "Member ⭐" : "User 🧑" }).
-    p= currentUser.fullname
+    h5 Welcome, #[strong= currentUser.username].
+    h6 User Status
+    ul 
+        if currentUser.admin 
+            li 
+                strong Admin
+        li User
+        if currentUser.member 
+            li
+                p Member ⭐

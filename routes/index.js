@@ -64,4 +64,18 @@ router.post(
   userController.postMembership
 );
 
+router.get("/admin", async (req, res, next) => {
+  if (!req.user || !req.user.admin) {
+    const err = new Error("Unauthorized");
+    err.status = 403;
+    return next(err);
+  }
+
+  try {
+    const users = await User.find().exec();
+    res.render("admin", { users: users });
+  } catch (err) {
+    return next(err);
+  }
+});
 module.exports = router;

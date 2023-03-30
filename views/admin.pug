@@ -1,0 +1,17 @@
+extends layout 
+
+block content 
+    h2 User information
+    p This list is read only.
+    table.table.table-sm.table-hover
+        thead 
+            tr
+                th Username
+                th Member
+                th Admin
+        tbody
+            for user in users
+                tr
+                    td= user.username
+                    td #{user.member ? "Y" : ""}
+                    td #{user.admin ? "Y" : ""}
