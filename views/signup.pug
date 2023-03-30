@@ -2,9 +2,11 @@ extends layout
 
 block content
   h2 Sign Up
-  p Signing up makes you a user. Only members can post here, however.
-  p Becoming a member requires entering a secret code. (Don't worry, it's easy to find.)
-  form(action="/sign-up" method="POST")
+  p Signing up makes you a user. Only members can post here, however, which requires entering a secret code. (Don't worry, it's easy to find.)
+  form(action="/signup" method="POST")
+    p Already have an account? 
+      a(href="/login") Log in
+      | .
     .mb-3
       label(for="fullname") Full name
       input.form-control(required name="fullname" type="text" )

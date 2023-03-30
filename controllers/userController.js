@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 
 const User = require("../models/user");
-const Message = require("../models/message");
 
 exports.validateSignUp = [
   body("fullname")
@@ -29,7 +28,7 @@ exports.validateSignUp = [
       res.status(400);
 
       // There are errors. Render form again with sanitized values/errors messages.
-      res.render("sign-up-form", {
+      res.render("signup", {
         fullname: req.body.fullname,
         username: req.body.username,
         errors: errors.array(),
@@ -78,7 +77,7 @@ exports.validateMembership = [
       res.status(400);
 
       // There are errors. Render form again with sanitized values/errors messages.
-      res.render("membership", {
+      res.render("member", {
         errors: errors.array(),
       });
       return;

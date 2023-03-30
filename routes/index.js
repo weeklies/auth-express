@@ -4,14 +4,16 @@ var router = express.Router();
 const passport = require("passport");
 
 const userController = require("../controllers/userController");
-const messageController = require("../controllers/messageController");
-
 const User = require("../models/user");
-const Message = require("../models/message");
 
-/* GET home page. */
-router.get(["/", "/log-in"], function (req, res, next) {
-  if (req.user) return res.render("dashboard");
+router.get("/", function (req, res, next) {
+  if (req.user) return res.redirect("/messages");
+
+  res.redirect("/login");
+});
+
+router.get("/login", function (req, res, next) {
+  if (req.user) return res.redirect("/messages");
 
   const flash = req.flash();
   if (flash.error) {
@@ -20,14 +22,22 @@ router.get(["/", "/log-in"], function (req, res, next) {
     return next(err);
   }
 
-  res.render("index", {
+  res.render("login", {
     user: req.user,
     success: req.session.success,
   });
 });
 
+router.get("/status", (req, res, next) => {
+  if (req.user) {
+    return res.render("status");
+  } else {
+    res.redirect("/login");
+  }
+});
+
 router.post(
-  "/log-in",
+  "/login",
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/",
@@ -41,25 +51,25 @@ router.get("/log-out", (req, res, next) => {
   });
 });
 
-router.get("/sign-up", (req, res) => {
+router.get("/signup", (req, res) => {
   if (req.user) return res.redirect("/");
-  return res.render("sign-up-form");
+  return res.render("signup");
 });
 
 router.post(
-  "/sign-up",
+  "/signup",
   ...userController.validateSignUp,
   userController.postSignUp
 );
 
-router.get("/membership", (req, res) => {
-  if (!req.user) return res.redirect("/log-in");
+router.get("/member", (req, res) => {
+  if (!req.user) return res.redirect("/login");
 
-  return res.render("membership");
+  return res.render("member");
 });
 
 router.post(
-  "/membership",
+  "/member",
   ...userController.validateMembership,
   userController.postMembership
 );

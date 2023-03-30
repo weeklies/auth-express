@@ -6,14 +6,14 @@ block content
     if currentUser.member
         p You're already a member. 🎉
         p Looking to post a message? Head 
-            a(href="/post") here
+            a(href="/messages/new") here
             | .
     else
         p Enter a secret code to become a member. Members can post messages, isn't that neat?
         p (The secret code is 
             code  potatosalad
-            | . You're welcome)
-        form(action="/membership" method="POST")
+            | . You're welcome.)
+        form(action="/member" method="POST")
             .mb-3
                 input.form-control(type="text" required name="secretCode" placeholder="Secret code")
             button.btn.btn-primary(type="submit") Submit

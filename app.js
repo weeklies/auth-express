@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 
 var User = require("./models/user");
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var messagesRouter = require("./routes/messages");
 
 const mongoDb = process.env.MONGO_URI;
 mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -91,7 +91,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-// app.use("/users", usersRouter);
+app.use("/messages", messagesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
