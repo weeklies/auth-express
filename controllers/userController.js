@@ -89,7 +89,7 @@ exports.validateMembership = [
 exports.postMembership = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.user._id, { member: true }).exec();
-    res.redirect('/');
+    res.redirect('/messages/new');
   } catch (err) {
     next(err);
   }

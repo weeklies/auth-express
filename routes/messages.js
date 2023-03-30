@@ -7,21 +7,15 @@ const Message = require('../models/message');
 /* GET messages listing. */
 router.get('/', async function (req, res, next) {
   try {
-    const messages = await Message.find().exec();
-    res.render('messages', { messages });
+    const messages = await Message.find().populate('creator').exec();
+    res.render('messages', { messages: messages.slice().reverse() });
   } catch (err) {
     return next(err);
   }
 });
 
-router.get('/new', function (req, res, next) {
-  // TODO
-  res.render('new-message');
-});
+router.get('/new', messageController.getMessage);
 
-router.post('/new', function (req, res, next) {
-  // TODO
-  res.redirect('/messages');
-});
+router.post('/new', messageController.postMessage);
 
 module.exports = router;

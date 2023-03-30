@@ -1,8 +1,11 @@
 extends layout
 
 block content
-    h5 Welcome, #[strong= currentUser.username].
-    h6 User Status
+    h2 User Status
+    p Welcome, #[strong= currentUser.fullname]. 
+    p As 
+        strong @#{currentUser.username}
+        | , you have the following roles:
     ul 
         if currentUser.admin 
             li 
@@ -11,3 +14,7 @@ block content
         if currentUser.member 
             li
                 p Member ⭐
+    if !currentUser.member 
+        p You can apply to be a member 
+            a(href="/member") here
+            | . Don't worry, the code is easy to find.

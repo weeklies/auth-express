@@ -2,11 +2,15 @@ extends layout
 
 block content 
     h2 Post a message
+    p Take note that messages aren't editable, so please be sure to 
+        strong check the message 
+        | before posting!
+    p Note: Administrators can, and will delete inappropriate posts without warning and at their own discretion.
     form(action="/messages/new" method="POST") 
         .mb-3
             label(for="title") Title
-            input.form-control(required name="title" type="text" )
+            input.form-control(required name="title" type="text" value=(undefined===title ? '' : title) )
         .mb-3
-            label(for="text") Text
-            textarea.form-control(required name="text")
+            label(for="text") Body text
+            textarea.form-control(required name="text")= text
         button.btn.btn-primary(type="submit") Post!

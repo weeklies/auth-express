@@ -1,12 +1,14 @@
 extends layout 
 
 block content 
-    h2 TODO
-    for message in messages
-        .d-grid
+    h2 Messages
+    .msg-grid
+        for message in messages
             .card
                 .card-body
-                    h5.card-title= message.title
-                    h6.card-subtitle= message.creator.username
-                    h6.card-subtitle.mb-2= message.timestamp
+                    .card-title
+                        strong @#{message.creator.username}
+                    .card-title
+                        h6= message.title
                     p.card-text= message.text
+                    small.text-muted Posted on #{message.timestamp_formatted}

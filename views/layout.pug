@@ -35,11 +35,11 @@ html(lang='en')
                         a.nav-link(href='/status') Status
                     li.nav-item
                         a.nav-link(href='/log-out') Log out
-        .container-sm.my-4
+        .wrapper.container-sm.my-4
             if errors
                 .alert.alert-info
                     p 
-                        strong There was an error fulfilling your request:
+                        strong Sorry, there was an error.
                     p 
                         ul 
                             for error in errors

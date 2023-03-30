@@ -1,5 +1,6 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Open Sans', 'Roboto', 'Lucida Grande', Helvetica, Arial,
+    sans-serif;
 }
 
 nav {
@@ -8,4 +9,15 @@ nav {
 
 .nav-item {
   margin-right: 10px;
+}
+
+.wrapper {
+  max-width: 750px;
+  margin: auto;
+}
+
+.msg-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
 }
