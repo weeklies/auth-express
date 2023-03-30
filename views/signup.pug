@@ -9,10 +9,10 @@ block content
       | .
     .mb-3
       label(for="fullname") Full name
-      input.form-control(required name="fullname" type="text" )
+      input.form-control(required name="fullname" type="text" value=(undefined===fullname ? '' : fullname) )
     .mb-3
       label(for="username") Username
-      input.form-control(required name="username" type="text" )
+      input.form-control(required name="username" type="text" value=(undefined===username ? '' : username) )
     .mb-3
       label(for="password") Password (min. 8 characters)
       input.form-control(required name="password" minlength="8" type="password")
