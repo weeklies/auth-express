@@ -1,52 +1,55 @@
 doctype html
 html(lang='en')
-    head
-        title= title
-        meta.nav-link(charset='utf-8')
-        meta.nav-link(name='viewport' content='width=device-width, initial-scale=1')
-        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous")
-        script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
-        script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous")
-        link(rel='stylesheet' href='/stylesheets/style.css')
-    body
-        .alert.alert-warning.py-4.my-0(role="alert")
-            | This is a project for learning purposes. Please,
-            strong  do not enter any identifiable information and passwords here!
-        nav.navbar.navbar-expand-lg.navbar-light
-            span.navbar-brand.mb-0.h1 Members Only
+  head
+    title= title
+    meta.nav-link(charset='utf-8')
+    meta.nav-link(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous")
+    script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous")
+    link(rel='stylesheet' href='/stylesheets/style.css')
+  body
+    .alert.alert-warning.py-4.my-0(role="alert")
+      | This is a project for learning purposes. Please,
+      strong  do not enter any identifiable information and passwords here!
+    nav.navbar.navbar-expand-lg.navbar-light
+      span.navbar-brand.mb-0.h1 Members Only
 
-            ul.navbar-nav.mr-auto.flex-row
-                li.nav-item
-                    a.nav-link(href='/') Home
-                if currentUser
-                    if currentUser.member
-                        li.nav-item
-                            a.nav-link(href='/messages/new') New Message
-                    else 
-                        li.nav-item
-                            a.nav-link(href='/member') Membership
+      ul.navbar-nav.mr-auto.flex-row
+        li.nav-item
+          a.nav-link(href='/') Home
+        if currentUser
+          if currentUser.member
+            li.nav-item
+              a.nav-link(href='/messages/new') New Message
+          else 
+            li.nav-item
+              a.nav-link(href='/member') Membership
 
-            ul.navbar-nav.mr-sm-2.flex-row
-                if currentUser
-                    if currentUser.admin
-                        li.nav-item
-                            a.nav-link(href='/admin') Admin
-                    li.nav-item
-                        a.nav-link(href='/status') Status
-                    li.nav-item
-                        a.nav-link(href='/log-out') Log out
-        .wrapper.container-sm.my-4
-            if errors
-                .alert.alert-info
-                    p 
-                        strong Sorry, there was an error.
-                    p 
-                        ul 
-                            for error in errors
-                                li=  error.msg
-            else if success
-                .alert.alert-success
-                    p 
-                        strong Success
-                    p= success.msg
-            block content
+      ul.navbar-nav.mr-sm-2.flex-row
+        if currentUser
+          if currentUser.admin
+            li.nav-item
+              a.nav-link(href='/admin') Admin
+          li.nav-item
+            a.nav-link(href='/status') Status
+          li.nav-item
+            a.nav-link(href='/logout') Log out
+        else 
+          li.nav-item
+            a.nav-link(href='/login') Log in
+    .wrapper.container-sm.my-4
+      if errors
+        .alert.alert-info
+          p 
+            strong Sorry, there was an error.
+          p 
+            ul 
+              for error in errors
+                li=  error.msg
+      else if success
+        .alert.alert-success
+          p 
+            strong Success
+          p= success.msg
+      block content

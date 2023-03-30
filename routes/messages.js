@@ -15,7 +15,9 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/new', messageController.getMessage);
-
 router.post('/new', messageController.postMessage);
+
+// Only support a POST request.
+router.delete('/:id/delete', messageController.deleteMessage);
 
 module.exports = router;
