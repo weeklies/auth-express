@@ -18,6 +18,6 @@ router.get('/new', messageController.getMessage);
 router.post('/new', messageController.postMessage);
 
 // Only support a POST request.
-router.delete('/:id/delete', messageController.deleteMessage);
+router.post('/:id/delete', messageController.deleteMessage);
 
 module.exports = router;
