@@ -24,6 +24,9 @@ html(lang='en')
 
       ul.navbar-nav.mr-sm-2.flex-row
         if currentUser
+          if currentUser.admin
+            li.nav-item
+              a.nav-link(href='/admin') Admin
           li.nav-item
             a.nav-link(href='/log-out') Log out
         else
