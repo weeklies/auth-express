@@ -3,6 +3,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 var createError = require("http-errors");
 const express = require("express");
+const helmet = require("helmet");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
@@ -23,6 +24,7 @@ app.set("views", path.join(__dirname, 'views'));
 app.set("view engine", "pug");
 
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+app.use(helmet());
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
