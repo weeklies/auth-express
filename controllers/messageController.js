@@ -1,5 +1,5 @@
-const User = require("../models/user");
-const Message = require("../models/message");
+const User = require('../models/user');
+const Message = require('../models/message');
 
 exports.getMessage = (req, res, next) => {};
 

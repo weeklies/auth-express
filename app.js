@@ -1,28 +1,28 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const bcrypt = require("bcryptjs");
-var createError = require("http-errors");
-const express = require("express");
-const flash = require("connect-flash");
-const helmet = require("helmet");
-const path = require("path");
-const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
+var createError = require('http-errors');
+const express = require('express');
+const flash = require('connect-flash');
+const helmet = require('helmet');
+const path = require('path');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
 
-var User = require("./models/user");
-var indexRouter = require("./routes/index");
-var messagesRouter = require("./routes/messages");
+var User = require('./models/user');
+var indexRouter = require('./routes/index');
+var messagesRouter = require('./routes/messages');
 
 const mongoDb = process.env.MONGO_URI;
 mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
-db.on("error", console.error.bind(console, "mongo connection error"));
+db.on('error', console.error.bind(console, 'mongo connection error'));
 
 const app = express();
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 app.use(
   session({
@@ -37,8 +37,8 @@ app.use(
       directives: {
         scriptSrc: [
           "'self'",
-          "https://code.jquery.com",
-          "https://stackpath.bootstrapcdn.com",
+          'https://code.jquery.com',
+          'https://stackpath.bootstrapcdn.com',
         ],
       },
     },
@@ -51,18 +51,18 @@ passport.use(
     try {
       const user = await User.findOne({ username: username });
       if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+        return done(null, false, { message: 'Incorrect username' });
       }
 
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           return done(null, user);
         } else {
-          return done(null, false, { message: "Incorrect password" });
+          return done(null, false, { message: 'Incorrect password' });
         }
       });
     } catch (err) {
-      return done(err, false, { message: "There was an unexpected error." });
+      return done(err, false, { message: 'There was an unexpected error.' });
     }
   })
 );
@@ -88,10 +88,10 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/", indexRouter);
-app.use("/messages", messagesRouter);
+app.use('/', indexRouter);
+app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -102,11 +102,11 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render('error');
 });
 
 module.exports = app;
